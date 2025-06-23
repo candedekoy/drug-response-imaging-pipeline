@@ -27,12 +27,12 @@ def main():
     """
     print ("analysis pipeline")
     
-    # --- Configuration ---
-    DATA_DIR = 'data/'
+    # configuration
+    DATA_DIR = 'data.nosync/'
     RESULTS_DIR = 'results/'
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
-    # Only needed when saving masks and visualizations
+    # only needed when saving masks and visualizations
     #MASKS_DIR = os.path.join(RESULTS_DIR, 'masks')
     #os.makedirs(MASKS_DIR, exist_ok=True)
     #VISUALIZATION_DIR = os.path.join(RESULTS_DIR, 'visualizations')

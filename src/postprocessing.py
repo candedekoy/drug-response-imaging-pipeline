@@ -12,7 +12,7 @@ def get_cytoplasm_mask(cell_mask, nuc_mask, shrink_pixels=5):
 
     selem = disk(shrink_pixels)
 
-    # Eroding the cell mask to get the "inner cell"
+    # eroding the cell mask to get the "inner cell"
     shrunken_cell_mask = np.zeros_like(cell_mask)
     for label in np.unique(cell_mask):
         if label == 0:
@@ -91,7 +91,7 @@ def relabel_nuclei_by_cell_overlap(cell_mask, nuc_mask, overlap_threshold=0.5):
     for nuc_label in nuc_labels:
         nuc_region_mask = (nuc_mask == nuc_label)
         
-        # Find all cell labels that overlap with this nucleus and ignore background pixels (label 0)
+        # find all cell labels that overlap with this nucleus and ignore background pixels (label 0)
         overlapping_cell_labels = cell_mask[nuc_region_mask]
         overlapping_cell_labels = overlapping_cell_labels[overlapping_cell_labels != 0]
 
