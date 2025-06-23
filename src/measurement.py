@@ -34,7 +34,7 @@ def measure_intensities(nuc_mask, cyto_mask, mem_mask, nuc_signal, cell_signal):
 
     # --- Merge the dataframes ---
     # We merge them on the 'label' column, which corresponds to the cell ID.
-    df = pd.merge(df_nuc, df_cyto, on='label', how='inner')
-    df = pd.merge(df, df_mem, on='label', how='inner')
+    df = pd.merge(df_nuc, df_cyto, on='label', how='outer')
+    df = pd.merge(df, df_mem, on='label', how='outer')
 
     return df 
