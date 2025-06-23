@@ -43,6 +43,7 @@ def get_membrane_mask_and_shrunken_cells(cell_mask, shrink_pixels=5):
         
         shrunken_cells[eroded_cell] = label
             
+
     membrane_mask = cell_mask - shrunken_cells
     
     return membrane_mask, shrunken_cells

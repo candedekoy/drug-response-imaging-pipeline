@@ -76,21 +76,10 @@ def main():
             cell_mask_cleared = remove_border_objects(cell_mask)
             
             # creating a clean nucleus mask that maps to the cleared cells
-
-            nuc_mask_cleared = np.zeros_like(nuc_mask)
-            for cell_label in np.unique(cell_mask_cleared):
-                if cell_label == 0: continue
-                cell_pixels = (cell_mask_cleared == cell_label)
-                nuclei_in_cell = nuc_mask[cell_pixels]
-                unique_nuc_labels = np.unique(nuclei_in_cell[nuclei_in_cell > 0])
-                
-                for nuc_label in unique_nuc_labels:
-                    nuc_mask_cleared[nuc_mask == nuc_label] = nuc_label
             
-            membrane_mask, shrunken_cells = get_membrane_mask_and_shrunken_cells(cell_mask_cleared, shrink_pixels=5
-            )
+            membrane_mask, shrunken_cells = get_membrane_mask_and_shrunken_cells(cell_mask_cleared, shrink_pixels=5)
             
-            cytoplasm_mask = get_cytoplasm_mask(cell_mask_cleared, nuc_mask, shrink_pixels=3)
+            cytoplasm_mask = get_cytoplasm_mask(cell_mask_cleared, nuc_mask, shrink_pixels=5)
 
             # saving masks for visualization 
             #base_savename = os.path.basename(nuc_img_path).replace('_n.tif', '')
