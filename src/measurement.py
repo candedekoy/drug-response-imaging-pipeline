@@ -32,8 +32,7 @@ def measure_intensities(nuc_mask, cyto_mask, mem_mask, nuc_signal, cell_signal):
     )
     df_mem = pd.DataFrame(mem_props).rename(columns={'mean_intensity': 'mem_mean_intensity'})
 
-    # --- Merge the dataframes ---
-    # We merge them on the 'label' column, which corresponds to the cell ID.
+    # merging the dataframes
     df = pd.merge(df_nuc, df_cyto, on='label', how='outer')
     df = pd.merge(df, df_mem, on='label', how='outer')
 

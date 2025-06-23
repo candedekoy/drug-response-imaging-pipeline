@@ -92,9 +92,11 @@ dmypy.json
 .pypirc
 
 
-
 # Data directories and files
 data/
+src/segmentation_test.py
+data.nosync/
+results/
 */data/
 dataset/
 */dataset/

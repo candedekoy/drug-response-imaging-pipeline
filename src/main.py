@@ -15,7 +15,7 @@ if './src' not in sys.path:
     sys.path.insert(0, './src')
 
 from segmentation import segment_nuclei, segment_cells, cpsam_segmentation
-from postprocessing import get_cytoplasm_mask,get_membrane_mask_and_shrunken_cells, remove_border_objects
+from postprocessing import get_cytoplasm_mask,get_membrane_mask_and_shrunken_cells, remove_border_objects, relabel_nuclei_by_cell_overlap, filter_cells_without_nuclei
 from measurement import measure_intensities
 from plotting import plot_nc_ratio, plot_membrane_signal
 
@@ -72,21 +72,25 @@ def main():
             nuc_mask = cpsam_segmentation(nuc_img, diameter=90)
             cell_mask = cpsam_segmentation(cyt_img, diameter=150)
 
-            # postprocessing, removing objects touching the border
+            # removing cells touching the border to get a clean cell mask.
             cell_mask_cleared = remove_border_objects(cell_mask)
+
+            # relabeling nuclei based on the cleared cell mask. This ensures that a nucleus with label "x" belongs to the cell with label "x". 
+            nuc_mask_relabeled = relabel_nuclei_by_cell_overlap(cell_mask_cleared, nuc_mask, overlap_threshold=0.5)
+
+            # removing cells that do not have a corresponding nucleus assigned.
+            final_cell_mask = filter_cells_without_nuclei(cell_mask_cleared, nuc_mask_relabeled)
             
-            # creating a clean nucleus mask that maps to the cleared cells
-            
-            membrane_mask, shrunken_cells = get_membrane_mask_and_shrunken_cells(cell_mask_cleared, shrink_pixels=5)
-            
-            cytoplasm_mask = get_cytoplasm_mask(cell_mask_cleared, nuc_mask, shrink_pixels=5)
+            # generating masks
+            membrane_mask, shrunken_cells = get_membrane_mask_and_shrunken_cells(final_cell_mask, shrink_pixels=5)
+            cytoplasm_mask = get_cytoplasm_mask(final_cell_mask, nuc_mask_relabeled, shrink_pixels=5)
 
             # saving masks for visualization 
             #base_savename = os.path.basename(nuc_img_path).replace('_n.tif', '')
             #mask_path = os.path.join(MASKS_DIR, f"{base_savename}_cell_mask.tif")
-            #io.imsave(mask_path, cell_mask_cleared.astype(np.uint16), check_contrast=False)
-            #io.imsave(os.path.join(MASKS_DIR, f"{base_savename}_nuc_mask.tif"), nuc_mask.astype(np.uint16))
-            #io.imsave(os.path.join(MASKS_DIR, f"{base_savename}_cell_mask_cleared.tif"), cell_mask_cleared.astype(np.uint16))
+            #io.imsave(mask_path, final_cell_mask.astype(np.uint16), check_contrast=False)
+            #io.imsave(os.path.join(MASKS_DIR, f"{base_savename}_nuc_mask.tif"), nuc_mask_relabeled.astype(np.uint16))
+            #io.imsave(os.path.join(MASKS_DIR, f"{base_savename}_cell_mask_cleared.tif"), final_cell_mask.astype(np.uint16))
             #io.imsave(os.path.join(MASKS_DIR, f"{base_savename}_cyto_mask.tif"), cytoplasm_mask.astype(np.uint16))
             #io.imsave(os.path.join(MASKS_DIR, f"{base_savename}_membrane_mask.tif"), membrane_mask.astype(np.uint16))
 
@@ -94,12 +98,12 @@ def main():
             #fig, axes = plt.subplots(2, 2, figsize=(15, 15))
             #fig.suptitle(f'Segmentation for {condition_name}\\n{base_savename}', fontsize=16)
 
-            #axes[0, 0].imshow(plot.mask_overlay(nuc_img, nuc_mask))
-            #axes[0, 0].set_title('Cleaned Nucleus Mask')
+            #axes[0, 0].imshow(plot.mask_overlay(nuc_img, nuc_mask_relabeled))
+            #axes[0, 0].set_title('Cleaned & Relabeled Nucleus Mask')
             #axes[0, 0].axis('off')
             
-            #axes[0, 1].imshow(plot.mask_overlay(cyt_img, cell_mask_cleared))
-            #axes[0, 1].set_title('Cleaned Cell Mask')
+            #axes[0, 1].imshow(plot.mask_overlay(cyt_img, final_cell_mask))
+            #axes[0, 1].set_title('Final Cleaned Cell Mask')
             #axes[0, 1].axis('off')
 
             #axes[1, 0].imshow(plot.mask_overlay(cyt_img, cytoplasm_mask))
@@ -117,7 +121,7 @@ def main():
 
             # measurement 
             results_df = measure_intensities(
-                nuc_mask=nuc_mask,
+                nuc_mask=nuc_mask_relabeled,
                 cyto_mask=cytoplasm_mask,
                 mem_mask=membrane_mask,
                 nuc_signal=cyt_img,  
