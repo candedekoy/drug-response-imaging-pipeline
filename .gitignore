@@ -94,13 +94,11 @@ dmypy.json
 
 
 # Data directories and files
-results/
 data/
 */data/
 dataset/
 */dataset/
 *.dat
-*.csv
 *.tsv
 *.xls
 *.xlsx
@@ -129,7 +127,6 @@ dataset/
 # Large media files
 *.jpg
 *.jpeg
-*.png
 *.gif
 *.tif
 *.tiff
