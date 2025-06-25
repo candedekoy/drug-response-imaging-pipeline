@@ -89,11 +89,15 @@ dmypy.json
 # PyPI configuration file
 .pypirc
 
+# Allow data directories but not their contents
+# To track a directory, place an empty .gitkeep file inside it.
+data/**
+!data/**/
+!data/**/.gitkeep
+
+
 
 # Data directories and files
-data/
-data.nosync/
-src/plotting_from_results.ipynb
 data.nosync/
 */data/
 dataset/

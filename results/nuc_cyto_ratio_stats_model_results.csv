@@ -1,0 +1,7 @@
+Term,Coefficient,Standard Error,t,P>|t|,Lower 95% CI,Upper 95% CI
+Intercept,0.55,0.01,70.56,0.00,0.53,0.56
+condition[T.220216 FW006B3 HAP1_Position005_CHIR 4muM],0.22,0.01,19.44,0.00,0.20,0.24
+condition[T.220216 FW006B3 HAP1_Position008_Wnt3a 100 ngml],0.12,0.01,10.24,0.00,0.10,0.15
+time_point,0.00,0.00,18.05,0.00,0.00,0.00
+condition[T.220216 FW006B3 HAP1_Position005_CHIR 4muM]:time_point,-0.00,0.00,-1.22,0.22,-0.00,0.00
+condition[T.220216 FW006B3 HAP1_Position008_Wnt3a 100 ngml]:time_point,0.00,0.00,7.53,0.00,0.00,0.00
