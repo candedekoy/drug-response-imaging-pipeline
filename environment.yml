@@ -6,6 +6,8 @@ channels:
   - https://repo.anaconda.com/pkgs/main
   - https://repo.anaconda.com/pkgs/r
 dependencies:
+  - pandas
+  - statsmodels
   - aiofiles=22.1.0=pyhd8ed1ab_0
   - aiosqlite=0.20.0=pyhd8ed1ab_0
   - alabaster=0.7.13=pyhd8ed1ab_0
@@ -302,7 +304,6 @@ dependencies:
   - openssl=3.5.0=h81ee809_1
   - p11-kit=0.24.1=h29577a5_0
   - packaging=25.0=pyh29332c3_1
-  - pandas=2.0.3=py38hefb543e_1
   - pandocfilters=1.5.0=pyhd8ed1ab_0
   - parso=0.8.4=pyhd8ed1ab_0
   - partd=1.4.1=pyhd8ed1ab_0
@@ -402,7 +403,6 @@ dependencies:
   - sphinxcontrib-serializinghtml=1.1.5=pyhd8ed1ab_2
   - stack_data=0.6.2=pyhd8ed1ab_0
   - stackview=0.12.0=pyhd8ed1ab_0
-  - statsmodels=0.14.1=py38hd97cf01_0
   - superqt=0.6.7=pyh9208f05_0
   - svt-av1=1.5.0=hb765f3a_0
   - sympy=1.13.3=pyh2585a3b_104

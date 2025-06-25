@@ -28,7 +28,7 @@ def main():
     print ("analysis pipeline")
     
     # configuration
-    DATA_DIR = 'data.nosync/'
+    DATA_DIR = 'data/'
     RESULTS_DIR = 'results/'
     os.makedirs(RESULTS_DIR, exist_ok=True)
 

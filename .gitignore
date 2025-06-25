@@ -47,8 +47,6 @@ coverage.xml
 cover/
 
 
-# Jupyter Notebook
-.ipynb_checkpoints
 
 # IPython
 profile_default/
@@ -94,9 +92,9 @@ dmypy.json
 
 # Data directories and files
 data/
-src/segmentation_test.py
 data.nosync/
-results/
+src/plotting_from_results.ipynb
+data.nosync/
 */data/
 dataset/
 */dataset/
