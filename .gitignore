@@ -140,3 +140,5 @@ dataset/
 *.avi
 *.mov
 *.wmv
+# macOS
+.DS_Store
